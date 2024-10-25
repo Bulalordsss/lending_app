@@ -28,13 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
@@ -80,15 +81,15 @@ flutter:
   fonts:
     - family: KohSantepheap
       fonts:
-        - asset: fonts/KohSantepheap-Black.ttf
+        - asset: assets/KohSantepheap-Black.ttf
           weight: 900
-        - asset: fonts/KohSantepheap-Bold.ttf
+        - asset: assets/KohSantepheap-Bold.ttf
           weight: 700
-        - asset: fonts/KohSantepheap-Light.ttf
+        - asset: assets/KohSantepheap-Light.ttf
           weight: 300
-        - asset: fonts/KohSantepheap-Regular.ttf
+        - asset: assets/KohSantepheap-Regular.ttf
           weight: 400
-        - asset: fonts/KohSantepheap-Thin.ttf
+        - asset: assets/KohSantepheap-Thin.ttf
           weight: 100
   #
   # For details regarding fonts from package dependencies,
