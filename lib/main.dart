@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'screens/welcome.dart';
+ 
 void main() {
   runApp(RootWidget());
 }
@@ -9,9 +10,8 @@ class RootWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
+      home: WelcomeScreen(),
     );
   }
-
 }
 
