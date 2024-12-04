@@ -1,92 +1,78 @@
 import 'package:flutter/material.dart';
-import 'mainpage.dart';
-import 'login.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../controllers/signup_controller.dart';
+import '../providers.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Signup(),
-    );
-  }
-}
-
-class Signup extends StatelessWidget {
-  Signup({super.key});
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+class Signup extends ConsumerWidget {
+  const Signup({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signupState = ref.watch(signupControllerProvider);
+    final signupController = ref.read(signupControllerProvider.notifier);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 242, 239, 229),
-      body: SingleChildScrollView( // Added to enable scrolling
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 40), // Optional spacing from top
-              Image(image: AssetImage('assets/logo.png')),
-              SizedBox(height: 16),
+              const SizedBox(height: 40),
+              const Image(image: AssetImage('assets/logo.png')),
+              const SizedBox(height: 16),
               TextField(
-                controller: nameController,
-                decoration: InputDecoration(
+                onChanged: signupController.setName,
+                decoration: const InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
+                onChanged: signupController.setUsername,
+                decoration: const InputDecoration(
                   labelText: 'Username',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
+                onChanged: signupController.setPassword,
+                decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                 ),
                 obscureText: true,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
-                controller: confirmPasswordController,
-                decoration: InputDecoration(
+                onChanged: signupController.setConfirmPassword,
+                decoration: const InputDecoration(
                   labelText: 'Confirm Password',
                   border: OutlineInputBorder(),
                 ),
                 obscureText: true,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
+              if (signupState.errorMessage != null)
+                Text(
+                  signupState.errorMessage!,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Navigate()),
-                  );
-                },
-                child: Text('Signup'),
+                onPressed: () => signupController.signup(context),
+                child: const Text('Signup'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
+                  Navigator.pushNamed(context, '/login');
                 },
-                child: Text('Back to Login'),
+                child: const Text('Back to Login'),
               ),
-              SizedBox(height: 20), // Optional bottom spacing
+              const SizedBox(height: 20),
             ],
           ),
         ),

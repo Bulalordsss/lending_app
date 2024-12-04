@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final double currentBalance;
+
+  const HomePage({super.key, required this.currentBalance});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 242, 239, 229),
-      body: SingleChildScrollView( // Wrap the Center widget with SingleChildScrollView
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -16,7 +18,7 @@ class HomePage extends StatelessWidget {
               Card.outlined(
                 child: _SampleCard(
                   cardName: 'Notifications',
-                  subtitle: 'Loan Payment of ₱1,850 due in 7 days',
+                  subtitle: 'Loan Payment of ₱${currentBalance.toStringAsFixed(2)} due in 7 days',
                 ),
               ),
               Card.outlined(
@@ -38,7 +40,7 @@ class HomePage extends StatelessWidget {
               Card.outlined(
                 child: _SampleCard(
                   cardName: 'Loan Balance',
-                  subtitle: 'Your current balance is ₱9150',
+                  subtitle: 'Your current balance is ₱${currentBalance.toStringAsFixed(2)}',
                 ),
               ),
             ],
@@ -51,7 +53,7 @@ class HomePage extends StatelessWidget {
 
 class _SampleCard extends StatelessWidget {
   const _SampleCard({required this.cardName, required this.subtitle});
-  
+
   final String cardName;
   final String subtitle;
 

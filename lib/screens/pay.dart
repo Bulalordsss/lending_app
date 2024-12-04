@@ -1,15 +1,19 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/controllers/pay_controller.dart';  // Make sure to import the payment controller
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class PayPage extends StatefulWidget {
-  PayPage({super.key});
+class PayPage extends ConsumerStatefulWidget {
+  final Function(double, {bool isPayment}) updateBalance;
+
+  PayPage({super.key, required this.updateBalance});
 
   @override
   _PayPageState createState() => _PayPageState();
 }
 
-class _PayPageState extends State<PayPage> {
+class _PayPageState extends ConsumerState<PayPage> {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController accountNameController = TextEditingController();
   final TextEditingController accountNumberController = TextEditingController();
@@ -35,13 +39,13 @@ class _PayPageState extends State<PayPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 242, 239, 229),
-      body: SingleChildScrollView( // Wraps Column to allow scrolling
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 40), // Optional spacing from top
+              SizedBox(height: 40),
               Text('Pay Application', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               SizedBox(height: 16),
               TextField(
@@ -50,6 +54,7 @@ class _PayPageState extends State<PayPage> {
                   labelText: 'Amount',
                   border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.number,
               ),
               SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -107,7 +112,18 @@ class _PayPageState extends State<PayPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Optional bottom spacing
+              SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    double paymentAmount = double.parse(amountController.text);
+                    widget.updateBalance(paymentAmount, isPayment: true);  // Subtract the payment from the balance
+                  },
+                  child: const Text('Apply Pay'),
+                ),
+              ),
+              SizedBox(height: 20),
             ],
           ),
         ),

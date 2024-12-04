@@ -5,7 +5,6 @@ import 'loan.dart';
 import 'profile.dart';
 import 'settings.dart';
 
-
 class Navigate extends StatefulWidget {
   const Navigate({super.key});
 
@@ -16,16 +15,30 @@ class Navigate extends StatefulWidget {
 class _NavigateState extends State<Navigate> {
   int currentPageIndex = 0;
 
-  final List<Widget> pages = [
-    HomePage(),
-    PayPage(),
-    LoanPage(),
-    ProfilePage(),
-    SettingsPage(),
-  ];
+  // Initial current balance
+  double currentBalance = 0;
+
+  // Update balance logic (add new loan to current balance or subtract payment)
+  void updateBalance(double amount, {bool isPayment = false}) {
+    setState(() {
+      if (isPayment) {
+        currentBalance -= amount;  // Subtract the payment from the current balance
+      } else {
+        currentBalance += amount;  // Add loan to the current balance
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      HomePage(currentBalance: currentBalance),  // Pass the current balance to HomePage
+      PayPage(updateBalance: updateBalance),    // Pass updateBalance to PayPage
+      LoanPage(updateBalance: updateBalance),   // Pass updateBalance to LoanPage
+      ProfilePage(),
+      SettingsPage(),
+    ];
+
     return Scaffold(
       body: pages[currentPageIndex],
       bottomNavigationBar: NavigationBar(

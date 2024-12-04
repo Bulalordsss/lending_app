@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'login.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WelcomeScreen(),
-    );
-  }
-}
+import 'login.dart'; // Import the Login class
 
 class WelcomeScreen extends StatelessWidget {
-    WelcomeScreen({super.key});
-    
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +13,26 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Logo
-            Image(image: AssetImage('assets/logo.png'),),
-            // Text
+            Image.asset('assets/logo.png'),
+            
+            // Text Description
             Padding(
-              padding: EdgeInsets.all(8.0), // Adjust padding as needed
+              padding: const EdgeInsets.all(8.0), // Adjust padding as needed
               child: Text(
                 'Lorem ipsum dolor sit amet consectetur. Vitae est cursus viverra id leo a massa tellus neque. Eu urna pharetra dolor sed eleifend. Pellentesque morbi aliquam nulla mauris. Iaculis felis senectus sollicitudin tempor vestibulum auctor.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.0),
+                style: const TextStyle(fontSize: 14.0),
               ),
             ),
-            SizedBox(height: 16),
+            
+            const SizedBox(height: 16),
+            
+            // Get Started Button
             ElevatedButton(
               onPressed: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Login()),
-              );
+                Navigator.pushNamed(context, '/login'); // Use named route for Login
               },
-              child: Text('Get Started'),
+              child: const Text('Get Started'),
             ),
           ],
         ),
